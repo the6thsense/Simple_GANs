@@ -7,6 +7,8 @@ Original file is located at
     https://colab.research.google.com/drive/1so85l_CJhIT8wrukWjQXpGMMmD5ZkkE9
 """
 
+#MODEL
+
 import torch.nn as nn
 import torch
 from torch.utils.data import DataLoader as dataloader
@@ -160,29 +162,3 @@ class x():
         return y.cpu().detach().numpy().reshape( 75, 75,3 ), self.gen_x_loss, self.dis_lossx, self.dis_lossimg
 
 
-
-
-a = x(generator, discriminator, 100, LRg = 0.001, LRd = 0.001 , epochs =  50
-      )
-
-
-v, gen_x_loss, dis_lossx, dis_lossimg = a.produce(torch.randn( 1, 3, 75, 75))
-
-image, ax1 = plt.subplots( 1,1, figsize = (20,20))
-x = plt.imread( "https://upload.wikimedia.org/wikipedia/commons/e/e9/Felis_silvestris_silvestris_small_gradual_decrease_of_quality.png")
-ax1.imshow( a.generator(torch.randn( 1, 3, 75, 75).to('cuda')).cpu().detach().numpy().reshape( 75,75,3 )*x.std()+x.mean())  
-
-
-fig, (ax2,ax3,ax4) = plt.subplots( 3,1, figsize = (10,10))
-ax2.plot(gen_x_loss, color ="green")
-ax3.plot( dis_lossx[:], label = "dis_lossx", color= "orange")
-ax4.plot( dis_lossimg[:], label = "dis_lossimg", color = "orange")
-
-for ax ,i in zip (fig.axes, ["gen_loss", "dis_loss", "dis_loss_img"]):
-  ax.legend = i
-
-image,(ax1,ax2) = plt.subplots( 1,2, figsize = (20,20))
-x = plt.imread( "https://upload.wikimedia.org/wikipedia/commons/e/e9/Felis_silvestris_silvestris_small_gradual_decrease_of_quality.png")[ 225:300,300:375,: ]
-        
-ax2.imshow( generator(torch.randn( 1, 3, 75, 75).to('cuda')).cpu().detach().numpy().reshape( 75,75,3 ))  
-ax1.imshow( 0.2*generator(torch.randn( 1, 3, 75, 75).to('cuda')).cpu().detach().numpy().reshape( 75,75,3 )+ x )
